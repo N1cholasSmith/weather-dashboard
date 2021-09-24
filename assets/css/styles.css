@@ -1,0 +1,56 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1;
+    background:linear-gradient(90deg,#48CAE4,#90E0EF 10%,#ADE8F4 30%,#CAF0F8 43%,#ADE8F4 58%,#90E0EF 89%,#48CAE4 98%);
+}
+
+.jumbotron {
+    text-align: center;
+    background-color: transparent;
+    color: black;
+    border-radius: 0.3rem;
+    border-bottom: 10px solid black;
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    background:linear-gradient(-60deg,#CAF0F8,#ADE8F4 10%,#90E0EF 30%,#48CAE4 43%,#90E0EF 58%,#ADE8F4 89%,#ffb700 98%);
+}
+
+/* form card---------------------------------------------------------- */
+#form-card{
+    padding-bottom:40px;
+}
+
+#wfl {
+    font-size: 45px;
+}
+
+#wtg {
+    font-size: 30px;
+}
+
+#city-weather-card {
+    padding-bottom: 100px; 
+}
+ 
+#city-card {
+    font-size: 40px;
+}
+
+#current-w-card {
+    font-size: 40px;
+}
+
+location-card {
+    display: flex;
+    justify-content: flex-start;
+    padding: 20px;
+}
+
+/* Daily forecast cards ------------------------------------------------- */
+.forecast-card {
+    padding-top: 20px;
+    padding-bottom: 40px;
+    background-color: #e9ecef;
+    opacity: 50%;
+}
