@@ -5,101 +5,83 @@ var fivedayforecast = ""
 var locationEl = document.querySelector("#location");
 var tempVal = document.querySelector("#temp");
 var humidVal = document.querySelector("#humid");
-var windspVal = document.querySelector("#windsp");
+var windVal = document.querySelector("#windsp");
 var uviVal = document.querySelector("#uvi");
 var cityVal = document.querySelector("#city")
-// 7day forecast variables ----------------------------------------------------------------------------------------
-// day1
-var tempVal1 = document.querySelector("#temp1");
-var humidVal1 = document.querySelector("#humid1");
-var windspVal1 = document.querySelector("#windsp1");
-var uviVal1 = document.querySelector("#uvi1");
-// day2
-var tempVal2 = document.querySelector("#temp2");
-var humidVal2 = document.querySelector("#humid2");
-var windspVal2 = document.querySelector("#windsp2");
-var uviVal2 = document.querySelector("#uvi2");
-// day3
-var tempVal3 = document.querySelector("#temp3");
-var humidVal3 = document.querySelector("#humid3");
-var windspVal3 = document.querySelector("#windsp3");
-var uviVal3 = document.querySelector("#uvi3");
+var iconVal = document.querySelector("#icon")
 
-// Weather DATA Queries
-async function getWeatherData() {
-    var fivedayforecast = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${locationEl.value}&appid=${APIkey}&units=metric`)
+
+function getWeatherData(data) {
+    var data = fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${locationEl.value}&appid=${APIkey}&units=metric`)
     .then(response => response.json())
-    console.log(fivedayforecast)
-
-    var oneCall = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${fivedayforecast.city.coord.lat}&lon=${fivedayforecast.city.coord.lon}&appid=${APIkey}&units=metric`)
-    .then(response => response.json())
-    console.log(oneCall)
-
-    // current weather data ------------------------------------------------------------
-    cityVal.textContent= fivedayforecast.city.name
-    tempVal.textContent= oneCall.current.temp + "*C"
-    humidVal.textContent= oneCall.current.humidity + "%"
-    windspVal.textContent= oneCall.current.wind_speed + " kms/hr"
-    uviVal.textContent= oneCall.current.uvi
-
-    // 7 day forecast -------------------------------------------------------------------
-    // day1
-    tempVal1.textContent= oneCall.daily.0.temp + "*C"
-    humidVal1.textContent= oneCall.current.humidity + "%"
-    windspVal1.textContent= oneCall.current.wind_speed + " kms/hr"
-    uviVal1.textContent= oneCall.current.uvi 
-    // day2
-    tempVal2.textContent= oneCall.current.temp + "*C"
-    humidVal2.textContent= oneCall.current.temp + "%"
-    windspVal2.textContent= oneCall.current.temp + " kms/hr"
-    uviVal2.textContent= oneCall.current.temp 
-    // day3
-    tempVal3.textContent= oneCall.current.temp + "*C"
-    humidVal3.textContent= oneCall.current.temp + "%"
-    windspVal3.textContent= oneCall.current.temp + " kms/hr"
-    uviVal3.textContent= oneCall.current.temp 
-
-
+    .then((data)=>{
+        console.log(data)
+        oneCall(data);
+        fiveDayForecast(data);
+    })
 }
 
+function oneCall(data) {
+    var oneCall = fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${data.city.coord.lat}&lon=${data.city.coord.lon}&appid=${APIkey}&units=metric`)
+    .then(response => response.json())
+    .then((cityData) =>{    
+        var iconUrl = `https://openweathermap.org/img/w/${cityData.current.weather[0].icon}.png`;
+        // console.log(getWeatherD)
+        // console.log(iconUrl)
+        cityVal.textContent= data.city.name
+         iconVal.setAttribute("src", iconUrl);
+         // iconVal.setAttribute("class","align-items-center")
+         tempVal.textContent= cityData.current.temp + " °C"
+         windVal.textContent= cityData.current.wind_speed + " KM/H" 
+         humidVal.textContent= cityData.current.humidity + " %"
+         uviVal.textContent= cityData.current.uvi
+    })
+};
+
+console.log(cityVal)
+// 7 day forecast -------------------------------------------------------------------
+// day1
+
+function fiveDayForecast(data) {
+    console.log(data)
+    for (var i = 6; i <=40; i+=6){
+        // creating a card
+        // var forecastCard = document.querySelector(".forcast-card")
+        var weatherCard = document.createElement("div");
+        var fiveDayData = document.createElement("ul");
+        var iconData = document.createElement("li")
+        var tempData = document.createElement("li");
+        var windData = document.createElement("li");
+        var humidData = document.createElement("li");
+        var uviData = document.createElement("li");
+
+        // add content to the card from the data 
+        tempData.textContent = data.list[i].main.temp + " °C"
+        windData.textContent = data.list[i].main.wind_speed + " KM/H" 
+        humidData.textContent = data.list[i].main.humidity + " %"
+        uviData.textContent = data.list[i].main.uvi
+
+        console.log(data.list[i].main.temp)
+        // append card to the div 
+        var forecastCard = document.querySelector(".forecast-card");
+        forecastCard.append(weatherCard);
+        weatherCard.append(fiveDayData);
+        fiveDayData.appendChild(iconData);
+        fiveDayData.appendChild(tempData);
+        fiveDayData.appendChild(windData);
+        fiveDayData.appendChild(humidData);
+        fiveDayData.appendChild(uviData);
+        // weatherCard.append(forecastCard)
+    }
+    
+}
+// fiveDayForecast()
 
 locationEl.addEventListener("keydown", function(event){
     if (event.keyCode === 13){
         getWeatherData();
     }
 })
-
-
-
-
-// fetch loads the data from the information
-
-
-
-
-
-
-
-
-
-
-// function displayWeather() {
-//     if (weather) {
-//         ellipse(50, 100, weather.main.temp, weather.main.temp);
-//         ellipse(50, 100, weather.main.wind, weather.main.wind_speed);
-//         ellipse(50, 100, weather.main.humidity, weather.main.humidity);
-//         ellipse(50, 100, weather.main.temp, weather.main.temp);
-//     } 
-// }
-
-
-
-
-
-
-
-
-
 
 
 // Time Display/Refresh ------------------------------------------------------------------

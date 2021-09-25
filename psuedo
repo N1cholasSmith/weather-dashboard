@@ -33,3 +33,97 @@ icons include
 var APIkey = "e25845a4dbea1389264f9b820c89ea63"
 
 https://api.openweathermap.org/data/2.5/onecall?lat={ lat }&lon={ lon }&exclude={ part  }&appid={API key}
+
+
+
+// -------------------- Global Variables ----------------------------
+var fiveDayForecast;
+var cityName = document.querySelector(".citySelected")
+var locationEl = document.querySelector(".location");
+var iconVal = document.querySelector("#icon")
+var tempVal = document.querySelector("#temp");
+var windVal = document.querySelector("#windsp");
+var humidVal = document.querySelector("#humid");
+var uviVal = document.querySelector("#uvi");
+var cityPicked = document.querySelector("#cityPicked")
+​
+// -------------------- API key ----------------------------
+var apiKey = 'ee6bc0db0b2e0a0c46117b224a3ee840'
+​
+// -------------------- Display current date in vp ----------------------------
+var currentDate = document.querySelector("#display-date");
+var date = moment().format("dddd, MMMM Do, YYYY")
+currentDate.textContent = date;
+​
+// -------------------- Display current time in vp ----------------------------
+var currentMoment = document.querySelector("#display-time");
+​
+function currentTime() {
+    var time = moment().format("hh:mm:ss");
+    currentMoment.textContent = time
+};
+​
+currentTime();
+setInterval(function(){
+    currentTime();
+},1000);
+​
+// -------------------- Get Weather API ----------------------------
+function fetchWeather(event) {
+    console.log("clicked");
+    event.preventDefault();
+    console.log(cityName.value);
+    fiveDayForecast = fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName.value}&appid=${apiKey}&units=metric`)
+    .then(response => response.json())
+    .then((data)=>{
+        console.log(data);
+        weatherData(data);
+        // fiveDayForecast(data)
+    })
+​
+};
+​
+function fiveDayForecast(data) {
+    for (var i = 6; i <=40; i+=6){
+        // creating a card
+        var weatherCard = document.createElement("div");
+        var fiveDayData = document.createElement("ul");
+        var iconData = document.createElement("li")
+        var tempData = document.createElement("li");
+        var windData = document.createElement("li");
+        var humidData = document.createElement("li");
+        var uviData = document.createElement("li");
+​
+        // add content to the card from the data 
+​
+        // append card to the div 
+    }
+}
+​
+function weatherData(data) {
+    console.log(data.city.coord);
+​
+    var oneCall = fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${data.city.coord.lat}&lon=${data.city.coord.lon}&appid=${apiKey}&units=metric`)
+    .then(response => response.json())
+  
+    })
+}
+​
+locationEl.addEventListener("click", fetchWeather);
+Collapse
+
+
+
+
+
+Send a message to Raimee Abbassi
+
+
+
+
+
+
+
+
+
+

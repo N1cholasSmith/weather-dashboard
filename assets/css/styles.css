@@ -2,7 +2,8 @@ body {
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
     line-height: 1;
-    background:linear-gradient(90deg,#48CAE4,#90E0EF 10%,#ADE8F4 30%,#CAF0F8 43%,#ADE8F4 58%,#90E0EF 89%,#48CAE4 98%);
+    /* background:linear-gradient(90deg,#48CAE4,#90E0EF 10%,#ADE8F4 30%,#CAF0F8 43%,#ADE8F4 58%,#90E0EF 89%,#48CAE4 98%); */
+    background-image: url(../images/AdobeStock_60814564.jpeg)
 }
 
 .jumbotron {

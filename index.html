@@ -32,7 +32,7 @@
                     <label id="wfl" for="location" class="col-form-label">Weather Forecast Location</label>
                 </div>
                 <div class="col-auto">
-                    <input type="location-input" id="location" value="Chicago" class="location-control"
+                    <input type="location-input" id="location" placeholder="type city name" class="location-control"
                         aria-describedby="passwordHelpInline">
                 </div>
                 <div class="col-auto">
@@ -45,23 +45,25 @@
                 <div id="city-weather-card" class="row">
                     <div id="city-card" class="col"> City Search History
                         <ul>
-                            <li>City:<span id="city"></span></li>
+                            <li><span id="city"></span></li>
                         <ul>
                     </div>
                     <div id="current-w-card" class="col">
                         Current weather
-                        <ul>
+                        <ul class="list-group list-group-flush list">
+                            <li>
+                                <img id="icon">
+                            </li>
                             <li> Temp:<span id="temp"></span></li>
                             <li >Humidity:<span id="humid"></span></li>
                             <li >Wind Speed:<span id="windsp"></span></li>
                             <li >UV Index:<span id="uvi"></span></li>
                         </ul>
-                    
                     </div>
                 </div>
                 <div class="card-columns">
                     <div class="forecast-card">
-                        <div class="col">
+                        <!-- <div class="col">
                             Monday
                         </div>
                         <ul>
@@ -69,9 +71,9 @@
                             <li> Humidity:<span id="humid1"></span></li>
                             <li> Wind Speed:<span id="windsp1"></span></li>
                             <li> UV Index:<span id="uvi1"></span></li>
-                        </ul>
-                    </div>
-                    <div class="forecast-card">
+                        </ul> -->
+                        <!-- </div> -->
+                        <!-- <div class="forecast-card">
                         <div class="col">
                             Tuesday
                         </div>
@@ -81,8 +83,8 @@
                             <li> Wind Speed:<span id="windsp2"></span></li>
                             <li> UV Index:<span id="uvi2"></span></li>
                         </ul>
-                    </div>
-                    <div class="forecast-card">
+                        </div>
+                        <div class="forecast-card">
                         <div class="col">
                             Wednesday
                         </div>
@@ -92,27 +94,27 @@
                             <li> Wind Speed:<span id="windsp3"></span></li>
                             <li> UV Index:<span id="uvi3"></span></li>
                         </ul>
-                    </div>
-                    <div class="forecast-card">
+                        </div>
+                        <div class="forecast-card">
                         <div class="col">
                             Thursday
                         </div>
-                    </div>
-                    <div class="forecast-card">
+                        </div>
+                        <div class="forecast-card">
                         <div class="col">
                             Friday
                         </div>
-                    </div>
-                    <div class="forecast-card">
+                        </div>
+                        <div class="forecast-card">
                         <div class="col">
                             Saturday
                         </div>
-                    </div>
-                    <div class="forecast-card">
+                        </div>
+                        <div class="forecast-card">
                         <div class="col">
                             Sunday
-                        </div>
-                    </div>
+                        <   !--  -->
+                    </div> 
                 </div>
             </section>
 
