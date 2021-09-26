@@ -26,7 +26,7 @@ function oneCall(data) {
     .then(response => response.json())
     .then((cityData) =>{    
         var iconUrl = `https://openweathermap.org/img/w/${cityData.current.weather[0].icon}.png`;
-        // console.log(getWeatherD)
+        console.log(oneCall)
         // console.log(iconUrl)
         cityVal.textContent= data.city.name
          iconVal.setAttribute("src", iconUrl);
@@ -46,6 +46,7 @@ function fiveDayForecast(data) {
     console.log(data)
     for (var i = 6; i <=40; i+=6){
         // creating a card
+        
         // var forecastCard = document.querySelector(".forcast-card")
         var weatherCard = document.createElement("div");
         var fiveDayData = document.createElement("ul");
