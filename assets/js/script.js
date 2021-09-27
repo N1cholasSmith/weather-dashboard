@@ -27,7 +27,7 @@ function oneCall(data) {
     .then((cityData) =>{    
         var iconUrl = `https://openweathermap.org/img/w/${cityData.current.weather[0].icon}.png`;
         console.log(oneCall)
-        // console.log(iconUrl)
+        console.log(iconUrl)
         cityVal.textContent= data.city.name
          iconVal.setAttribute("src", iconUrl);
          // iconVal.setAttribute("class","align-items-center")
@@ -38,49 +38,109 @@ function oneCall(data) {
     })
 };
 
-console.log(cityVal)
 // 7 day forecast -------------------------------------------------------------------
 // day1
+var forecastCard = document.querySelector(".forecast-card");
 
 function fiveDayForecast(data) {
     console.log(data)
-    for (var i = 6; i <=40; i+=6){
+    forecastCard.innerHTML = "";
+    for (var i = 8; i <=40; i+=8){
         // creating a card
         
         // var forecastCard = document.querySelector(".forcast-card")
         var weatherCard = document.createElement("div");
         var fiveDayData = document.createElement("ul");
+        var date = document.createElement("li")
         var iconData = document.createElement("li")
+        var iconImg = document.createElement("img")
         var tempData = document.createElement("li");
         var windData = document.createElement("li");
         var humidData = document.createElement("li");
         var uviData = document.createElement("li");
 
         // add content to the card from the data 
-        tempData.textContent = data.list[i].main.temp + " °C"
-        windData.textContent = data.list[i].main.wind_speed + " KM/H" 
-        humidData.textContent = data.list[i].main.humidity + " %"
+        var iconsUrl = `https://openweathermap.org/img/w/${data.list[i].weather[0].icon}.png`
+        iconImg.setAttribute("src", iconsUrl);
+        date.textContent = data.list[i].dt_txt;
+        tempData.textContent = data.list[i].main.temp + " °C";
+        windData.textContent = data.list[i].wind.speed + " KM/H";
+        humidData.textContent = data.list[i].main.humidity + " %";
         uviData.textContent = data.list[i].main.uvi
 
         console.log(data.list[i].main.temp)
         // append card to the div 
-        var forecastCard = document.querySelector(".forecast-card");
+        
         forecastCard.append(weatherCard);
         weatherCard.append(fiveDayData);
+        fiveDayData.appendChild(date)
+        iconData.appendChild(iconImg)
         fiveDayData.appendChild(iconData);
         fiveDayData.appendChild(tempData);
         fiveDayData.appendChild(windData);
         fiveDayData.appendChild(humidData);
-        fiveDayData.appendChild(uviData);
         // weatherCard.append(forecastCard)
+
     }
     
 }
 // fiveDayForecast()
 
+// function searchHistory() {
+//     // store search history in local
+//     for (var i = 0; i <=4; i++){
+//     recentSearch = JSON.stringify()
+//     localStorage.setItem("city", JSON.stringify(recentSearch));
+
+//     // creates a button
+//     searchHistoryCard = document.createElement("button")
+
+//     // parse recent search to button just created
+//     var searchHistoryCard = JSON.parse(localStorage.getItem(recentSearch))
+//     document.getElementById("city-card").append(button)
+
+//     // 
+
+//     }
+// }
+
+// local storage.JSON("city")
+// oneCall()
+//     - tempVal, windVal, humidVal, uviVal
+// fiveDayForecast()
+//     - tempVal, windVal, humidVal, uviVal
+
+// parse cityName to display
+// var highscoreList = JSON.parse(localStorage.getItem("HighscoreList"))
+
+// for (let i = 0; i < highscoreList.length; i++) {
+//     var paragraph = document.createElement("p")
+//     paragraph.textContent = highscoreList[i].initials + " " + highscoreList[i].finalScore
+//     document.getElementById("highscore").append(paragraph)
+// }
+
+// var cityVal = document.querySelector("#city")
+
+// document.creatElement("li");
+// citySearch.textContent
+// searchHistory.append(cityVal)
+
+
+
+
+
+
+
+
+
+
+
+
+
 locationEl.addEventListener("keydown", function(event){
     if (event.keyCode === 13){
         getWeatherData();
+        
     }
 })
 
