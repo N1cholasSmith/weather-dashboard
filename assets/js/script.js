@@ -11,6 +11,7 @@ var cityVal = document.querySelector("#city")
 var iconVal = document.querySelector("#icon")
 var searchHistoryContainer = document.querySelector("#search-history")
 var storageSearchHistory= [];
+var searchHistory = button.value
 
 function getWeatherData(data) {
     var data = fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${locationEl.value}&appid=${APIkey}&units=metric`)
@@ -23,6 +24,7 @@ function getWeatherData(data) {
         renderSearchHistory();
         oneCall(data);
         fiveDayForecast(data);
+
     })
 }
 
@@ -51,8 +53,6 @@ function fiveDayForecast(data) {
 
     forecastCard.innerHTML = "";
     for (var i = 7; i <=40; i+=8){
-
-        
         // var forecastCard = document.querySelector(".forcast-card")
         var weatherCard = document.createElement("div");
         var fiveDayData = document.createElement("ul");
@@ -73,8 +73,6 @@ function fiveDayForecast(data) {
         windData.textContent = data.list[i].wind.speed + " KM/H";
         humidData.textContent = data.list[i].main.humidity + " %";
         uviData.textContent = data.list[i].main.uvi
-        
-
         console.log(data.list[i].main.temp)
         // append card to the div 
         
@@ -87,6 +85,7 @@ function fiveDayForecast(data) {
         fiveDayData.appendChild(windData);
         fiveDayData.appendChild(humidData);
         // weatherCard.append(forecastCard)
+
     }
     
 }
@@ -116,8 +115,6 @@ function displayUVIndex(){
 }
 
 
-
-
 function renderSearchHistory() {
     searchHistoryContainer.innerHTML = '';
     searchHistory = JSON.parse(localStorage.getItem("cities"))
@@ -134,22 +131,36 @@ function renderSearchHistory() {
 }
 
 function handleSearchHistoryClick(e) {
-
+    console.log("btnClick")
     var btn = e.target;
     var search = btn.getAttribute('data-search');
-    getWeatherData();
-    oneCall()
-    fiveDayForecast()
     
+    var data = fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${buttonEl.value}&appid=${APIkey}&units=metric`)
+    .then(response => response.json())
+    .then((data)=>{
+        console.log(data)
+        renderSearchHistory();
+        getWeatherData();
+        oneCall(data);
+        fiveDayForecast(data);
+    })
+
+
+    // getWeatherData();
+    // oneCall()
+    // fiveDayForecast()
 }
 
 
 locationEl.addEventListener("keydown", function(event){
     if (event.keyCode === 13){
-        
         getWeatherData();
-        
     }
+})
+
+searchHistory.addEventListener("click", function(event){
+    handleSearchHistoryClick()
+
 })
 
 
