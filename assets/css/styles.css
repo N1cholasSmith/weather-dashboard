@@ -38,6 +38,12 @@ body {
     font-size: 40px;
 }
 
+#search-history {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
 #current-w-card {
     font-size: 40px;
 }
@@ -47,6 +53,14 @@ location-card {
     justify-content: flex-start;
     padding: 20px;
 }
+
+#search-history {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
 
 /* Daily forecast cards ------------------------------------------------- */
 .forecast-card {
@@ -59,3 +73,41 @@ location-card {
 ul {
     list-style-type: none;
 }
+
+button {
+	/* box-shadow: 10px 10px 22px -5px #050505; */
+	background-color:transparent;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+	color:#000000;
+	font-family:Arial;
+	font-size:20px;
+	font-weight:bold;
+	padding:13px 32px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #000000;
+}
+button:hover {
+	background-color:transparent;
+}
+button:active {
+	position:relative;
+	top:1px;
+}
+
+.green {
+    background-color: #77dd77;
+    color: white;
+}
+
+.yellow {
+    background-color: #e7a60d;
+    color: white;
+}
+  
+.red {
+    background-color: #ff6961;
+    color: white;
+}
+  

@@ -9,13 +9,18 @@ var windVal = document.querySelector("#windsp");
 var uviVal = document.querySelector("#uvi");
 var cityVal = document.querySelector("#city")
 var iconVal = document.querySelector("#icon")
-
+var searchHistoryContainer = document.querySelector("#search-history")
+var storageSearchHistory= [];
 
 function getWeatherData(data) {
     var data = fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${locationEl.value}&appid=${APIkey}&units=metric`)
     .then(response => response.json())
     .then((data)=>{
         console.log(data)
+        storageSearchHistory.push(locationEl.value);
+        localStorage.setItem("cities", JSON.stringify(storageSearchHistory));
+        console.log(storageSearchHistory)
+        renderSearchHistory();
         oneCall(data);
         fiveDayForecast(data);
     })
@@ -26,7 +31,6 @@ function oneCall(data) {
     .then(response => response.json())
     .then((cityData) =>{    
         var iconUrl = `https://openweathermap.org/img/w/${cityData.current.weather[0].icon}.png`;
-        console.log(oneCall)
         console.log(iconUrl)
         cityVal.textContent= data.city.name
          iconVal.setAttribute("src", iconUrl);
@@ -35,6 +39,7 @@ function oneCall(data) {
          windVal.textContent= cityData.current.wind_speed + " KM/H" 
          humidVal.textContent= cityData.current.humidity + " %"
          uviVal.textContent= cityData.current.uvi
+        
     })
 };
 
@@ -43,10 +48,10 @@ function oneCall(data) {
 var forecastCard = document.querySelector(".forecast-card");
 
 function fiveDayForecast(data) {
-    console.log(data)
+
     forecastCard.innerHTML = "";
-    for (var i = 8; i <=40; i+=8){
-        // creating a card
+    for (var i = 7; i <=40; i+=8){
+
         
         // var forecastCard = document.querySelector(".forcast-card")
         var weatherCard = document.createElement("div");
@@ -60,9 +65,10 @@ function fiveDayForecast(data) {
         var uviData = document.createElement("li");
 
         // add content to the card from the data 
-        var iconsUrl = `https://openweathermap.org/img/w/${data.list[i].weather[0].icon}.png`
+        var iconsUrl =`https://openweathermap.org/img/w/${data.list[i].weather[0].icon}.png`
         iconImg.setAttribute("src", iconsUrl);
         date.textContent = data.list[i].dt_txt;
+        // date = data.list[i].split(" ");---------------------------------------------
         tempData.textContent = data.list[i].main.temp + " °C";
         windData.textContent = data.list[i].wind.speed + " KM/H";
         humidData.textContent = data.list[i].main.humidity + " %";
@@ -80,65 +86,64 @@ function fiveDayForecast(data) {
         fiveDayData.appendChild(windData);
         fiveDayData.appendChild(humidData);
         // weatherCard.append(forecastCard)
-
     }
     
 }
 // fiveDayForecast()
 
-// function searchHistory() {
-//     // store search history in local
-//     for (var i = 0; i <=4; i++){
-//     recentSearch = JSON.stringify()
-//     localStorage.setItem("city", JSON.stringify(recentSearch));
+function displayUVIndex(){
 
-//     // creates a button
-//     searchHistoryCard = document.createElement("button")
+    uviVal = $(this).attr("id");
+    if(uviVal <= 1) {
+     // if > currentHour, text area is grey
+        $(this).addClass ("green");
+     // removeClass ensures there are no conflicts
+         $(this).removeClass("yellow");
+         $(this).removeClass("red");
+         console.log($(this))
+    } else if (uviVal >= 1.01, uviVal <=2 ) {
+    
+         $(this).removeClass ("green");
+         $(this).addClass("yellow");
+         $(this).removeClass("red");
 
-//     // parse recent search to button just created
-//     var searchHistoryCard = JSON.parse(localStorage.getItem(recentSearch))
-//     document.getElementById("city-card").append(button)
-
-//     // 
-
-//     }
-// }
-
-// local storage.JSON("city")
-// oneCall()
-//     - tempVal, windVal, humidVal, uviVal
-// fiveDayForecast()
-//     - tempVal, windVal, humidVal, uviVal
-
-// parse cityName to display
-// var highscoreList = JSON.parse(localStorage.getItem("HighscoreList"))
-
-// for (let i = 0; i < highscoreList.length; i++) {
-//     var paragraph = document.createElement("p")
-//     paragraph.textContent = highscoreList[i].initials + " " + highscoreList[i].finalScore
-//     document.getElementById("highscore").append(paragraph)
-// }
-
-// var cityVal = document.querySelector("#city")
-
-// document.creatElement("li");
-// citySearch.textContent
-// searchHistory.append(cityVal)
+    } else {
+         $(this).removeClass ("green");
+         $(this).removeClass("yellow");
+         $(this).addClass("red");
+    };      
+}
 
 
 
 
+function renderSearchHistory() {
+    searchHistoryContainer.innerHTML = '';
+    searchHistory = JSON.parse(localStorage.getItem("cities"))
+    // Start at end of history array and count down to show the most recent at the top.
+    for (var i = 0; i < searchHistory.length; i++) {
+      var btn = document.createElement('button');
+      
 
+      // `data-search` allows access to city name when click handler is invoked
+      btn.setAttribute('data-search', searchHistory[i]);
+      btn.textContent = searchHistory[i];
+      searchHistoryContainer.append(btn);
+    }
+}
 
+function handleSearchHistoryClick(e) {
 
-
-
-
-
+    var btn = e.target;
+    var search = btn.getAttribute('data-search');
+    getWeatherData();
+    
+}
 
 
 locationEl.addEventListener("keydown", function(event){
     if (event.keyCode === 13){
+        
         getWeatherData();
         
     }
