@@ -39,7 +39,7 @@ function oneCall(data) {
          windVal.textContent= cityData.current.wind_speed + " KM/H" 
          humidVal.textContent= cityData.current.humidity + " %"
          uviVal.textContent= cityData.current.uvi
-        
+         displayUVIndex()
     })
 };
 
@@ -73,6 +73,7 @@ function fiveDayForecast(data) {
         windData.textContent = data.list[i].wind.speed + " KM/H";
         humidData.textContent = data.list[i].main.humidity + " %";
         uviData.textContent = data.list[i].main.uvi
+        
 
         console.log(data.list[i].main.temp)
         // append card to the div 
@@ -92,25 +93,25 @@ function fiveDayForecast(data) {
 // fiveDayForecast()
 
 function displayUVIndex(){
-
-    uviVal = $(this).attr("id");
-    if(uviVal <= 1) {
+    var index = parseInt(uviVal.innerHTML)
+    var ultraviolet = $("#uvi")
+    if(index <= 3.99) {
      // if > currentHour, text area is grey
-        $(this).addClass ("green");
+        ultraviolet.addClass ("green");
      // removeClass ensures there are no conflicts
-         $(this).removeClass("yellow");
-         $(this).removeClass("red");
-         console.log($(this))
-    } else if (uviVal >= 1.01, uviVal <=2 ) {
+        ultraviolet.removeClass("yellow");
+        ultraviolet.removeClass("red");
+        console.log($(this))
+    } else if (index >= 4 && index <=7 ) {
     
-         $(this).removeClass ("green");
-         $(this).addClass("yellow");
-         $(this).removeClass("red");
+        ultraviolet.removeClass ("green");
+        ultraviolet.addClass("yellow");
+        ultraviolet.removeClass("red");
 
     } else {
-         $(this).removeClass ("green");
-         $(this).removeClass("yellow");
-         $(this).addClass("red");
+        ultraviolet.removeClass ("green");
+        ultraviolet.removeClass("yellow");
+        ultraviolet.addClass("red");
     };      
 }
 
@@ -137,6 +138,8 @@ function handleSearchHistoryClick(e) {
     var btn = e.target;
     var search = btn.getAttribute('data-search');
     getWeatherData();
+    oneCall()
+    fiveDayForecast()
     
 }
 
