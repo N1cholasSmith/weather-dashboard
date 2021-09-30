@@ -11,7 +11,7 @@ var cityVal = document.querySelector("#city")
 var iconVal = document.querySelector("#icon")
 var searchHistoryContainer = document.querySelector("#search-history")
 var storageSearchHistory= [];
-var searchHistory = button.value
+
 
 function getWeatherData(data) {
     var data = fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${locationEl.value}&appid=${APIkey}&units=metric`)
@@ -24,7 +24,6 @@ function getWeatherData(data) {
         renderSearchHistory();
         oneCall(data);
         fiveDayForecast(data);
-
     })
 }
 
@@ -126,7 +125,9 @@ function renderSearchHistory() {
       // `data-search` allows access to city name when click handler is invoked
       btn.setAttribute('data-search', searchHistory[i]);
       btn.textContent = searchHistory[i];
-      searchHistoryContainer.append(btn);
+      btn.addEventListener("click", searchHistoryContainer.append(btn))
+      
+    //   searchHistoryContainer.append(btn)
     }
 }
 
@@ -152,17 +153,12 @@ function handleSearchHistoryClick(e) {
 }
 
 
+
 locationEl.addEventListener("keydown", function(event){
     if (event.keyCode === 13){
         getWeatherData();
     }
 })
-
-searchHistory.addEventListener("click", function(event){
-    handleSearchHistoryClick()
-
-})
-
 
 // Time Display/Refresh ------------------------------------------------------------------
 var time = moment();
