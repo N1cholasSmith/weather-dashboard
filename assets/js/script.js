@@ -17,10 +17,8 @@ function getWeatherData(data) {
     var data = fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${locationEl.value}&appid=${APIkey}&units=metric`)
     .then(response => response.json())
     .then((data)=>{
-        console.log(data)
         storageSearchHistory.push(locationEl.value);
-        localStorage.setItem("cities", JSON.stringify(storageSearchHistory));
-        console.log(storageSearchHistory)
+        localStorage.setItem("cities", JSON.stringify(storageSearchHistory)); 
         renderSearchHistory();
         oneCall(data);
         fiveDayForecast(data);
@@ -32,7 +30,6 @@ function oneCall(data) {
     .then(response => response.json())
     .then((cityData) =>{    
         var iconUrl = `https://openweathermap.org/img/w/${cityData.current.weather[0].icon}.png`;
-        console.log(iconUrl)
         cityVal.textContent= data.city.name
          iconVal.setAttribute("src", iconUrl);
          // iconVal.setAttribute("class","align-items-center")
@@ -73,7 +70,6 @@ function fiveDayForecast(data) {
         windData.textContent = data.list[i].wind.speed + " KM/H";
         humidData.textContent = data.list[i].main.humidity + " %";
         uviData.textContent = data.list[i].main.uvi
-        console.log(data.list[i].main.temp)
         // append card to the div 
         
         forecastCard.append(weatherCard);
@@ -98,7 +94,6 @@ function displayUVIndex(){
      // removeClass ensures there are no conflicts
         ultraviolet.removeClass("yellow");
         ultraviolet.removeClass("red");
-        console.log($(this))
     } else if (index >= 4 && index <=7 ) {
     
         ultraviolet.removeClass ("green");
@@ -130,15 +125,12 @@ function renderSearchHistory() {
 renderSearchHistory()
 
 function handleSearchHistoryClick(e) {
-    console.log("btnClick")
     var btn = e.target;
     var search = btn.getAttribute('data-search');
     
     var data = fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${search}&appid=${APIkey}&units=metric`)
     .then(response => response.json())
     .then((data)=>{
-        console.log(data)
-        getWeatherData();
         oneCall(data);
         fiveDayForecast(data);
     })
