@@ -67,6 +67,7 @@ function fiveDayForecast(data) {
         var iconsUrl =`https://openweathermap.org/img/w/${data.list[i].weather[0].icon}.png`
         iconImg.setAttribute("src", iconsUrl);
         date.textContent = data.list[i].dt_txt;
+
         // date = data.list[i].split(" ");---------------------------------------------
         tempData.textContent = data.list[i].main.temp + " °C";
         windData.textContent = data.list[i].wind.speed + " KM/H";
@@ -83,8 +84,6 @@ function fiveDayForecast(data) {
         fiveDayData.appendChild(tempData);
         fiveDayData.appendChild(windData);
         fiveDayData.appendChild(humidData);
-        // weatherCard.append(forecastCard)
-
     }
     
 }
@@ -116,42 +115,36 @@ function displayUVIndex(){
 
 function renderSearchHistory() {
     searchHistoryContainer.innerHTML = '';
-    searchHistory = JSON.parse(localStorage.getItem("cities"))
+    searchHistory = JSON.parse(localStorage.getItem("cities"))||[]
     // Start at end of history array and count down to show the most recent at the top.
     for (var i = 0; i < searchHistory.length; i++) {
       var btn = document.createElement('button');
-      
-
+    
       // `data-search` allows access to city name when click handler is invoked
       btn.setAttribute('data-search', searchHistory[i]);
       btn.textContent = searchHistory[i];
-      btn.addEventListener("click", searchHistoryContainer.append(btn))
-      
-    //   searchHistoryContainer.append(btn)
+      searchHistoryContainer.append(btn)
     }
 }
+
+renderSearchHistory()
 
 function handleSearchHistoryClick(e) {
     console.log("btnClick")
     var btn = e.target;
     var search = btn.getAttribute('data-search');
     
-    var data = fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${buttonEl.value}&appid=${APIkey}&units=metric`)
+    var data = fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${search}&appid=${APIkey}&units=metric`)
     .then(response => response.json())
     .then((data)=>{
         console.log(data)
-        renderSearchHistory();
         getWeatherData();
         oneCall(data);
         fiveDayForecast(data);
     })
-
-
-    // getWeatherData();
-    // oneCall()
-    // fiveDayForecast()
 }
 
+searchHistoryContainer.addEventListener("click", handleSearchHistoryClick)
 
 
 locationEl.addEventListener("keydown", function(event){
