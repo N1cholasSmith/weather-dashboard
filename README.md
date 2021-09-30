@@ -20,12 +20,9 @@ The Weather dashboard ultizes server side API's to deliver realtime information 
 ---
 ## Usage
 
-The Work Day Scheduler is easily naviagted on an intuitive page. Simply type in the task on the respective hour and press the save button, this will be saved into local storage and will remain until the user chooses to delete or amend the information.
+The weather Dashboard is easily navigated through the search input. Simply search any city you would like the weather information for, it will be displayed and a button will be generated into a search history list. That can be used to search that desired city again.
     
-![weatherapidashboard](/Assets/images/06-server-side-apis-homework-demo.png)
-
-
-    
+ 
 ---
 ## Features
 - Time & Date
